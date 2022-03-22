@@ -1,0 +1,53 @@
+#!/usr/bin/env python
+# coding: utf-8
+
+# In[ ]:
+import selenium
+from selenium import webdriver
+from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.by import By
+
+options = Options()
+options.headless = True
+options.add_argument("--window-size=1920,1200")
+
+driver = webdriver.Chrome(options)
+driver.get("https://www.nftsocialranking.com/")
+index = 1
+dataset = []
+while True:
+    try:
+        project_heading = "/html/body/div[1]/div/div[4]/div/div/div/div/div/div[2]/table/tr[{index + 1}]/td[2]"
+        meta_score_heading = "/html/body/div[1]/div/div[4]/div/div/div/div/div/div[2]/table/tbody/tr[{index + 1}]/td[3]"
+        follower_count_heading = "/html/body/div[1]/div/div[4]/div/div/div/div/div/div[2]/table/tbody/tr[{index + 1}]/td[4]"
+        follower_change_heading = "/html/body/div[1]/div/div[4]/div/div/div/div/div/div[2]/table/tbody/tr[{index + 1}]/td[5]"
+        no_of_mentions_heading = "/html/body/div[1]/div/div[4]/div/div/div/div/div/div[2]/table/tbody/tr[{index + 1}]/td[6]"
+        no_of_activities_heading = "/html/body/div[1]/div/div[4]/div/div/div/div/div/div[2]/table/tbody/tr[{index + 1}]/td[7]"
+        avg_like_heading = "/html/body/div[1]/div/div[4]/div/div/div/div/div/div[2]/table/tbody/tr[{index + 1}]/td[8]"
+        avg_reply_heading = "/html/body/div[1]/div/div[4]/div/div/div/div/div/div[2]/table/tbody/tr[{index + 1}]/td[9]"
+        avg_retweet_heading = "/html/body/div[1]/div/div[4]/div/div/div/div/div/div[2]/table/tbody/tr[{index + 1}]/td[10]"
+        avg_quote_heading = "/html/body/div[1]/div/div[4]/div/div/div/div/div/div[2]/table/tbody/tr[{index + 1}]/td[11]"
+
+        project_raw = driver.find_element_by_xpath(project_heading)
+        meta_score_raw = driver.find_element_by_xpath(meta_score_heading)
+        follower_count_raw = driver.find_element_by_xpath(follower_count_heading)
+        follower_change_raw = driver.find_element_by_xpath(follower_change_heading)
+        no_of_mentions_raw = driver.find_element_by_xpath(no_of_mentions_heading)
+        no_of_activities_raw = driver.find_element_by_xpath(no_of_activities_heading)
+        avg_like_raw = driver.find_element_by_xpath(avg_like_heading)
+        avg_reply_raw = driver.find_element_by_xpath(avg_reply_heading)
+        avg_retweet_raw = driver.find_element_by_xpath(avg_retweet_heading)
+        avg_quote_raw = driver.find_element_by_xpath(avg_quote_heading)
+
+        dataset += [project_raw.text, meta_score_raw.text, follower_count_raw.txt, follower_change_raw.text,
+                    no_of_mentions_raw.text, no_of_activities_raw.text,
+                    avg_like_raw.text, avg_reply_raw.text, avg_retweet_raw.text, avg_quote_raw.text]
+        index += 1
+
+    except:
+        break
+
+driver.quit()
+
+print(dataset)
